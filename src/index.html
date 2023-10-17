@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+
+<body>
+  <main class="container" id="container">
+    <div class="outer" id="outer">
+      <div class="inner" id="inner">
+        <hgroup>
+          <h1> Bun+HTMX+Elysia+Turso</h1>
+          <h2> Try it out</h2>
+        </hgroup>
+      </div>
+      <label for="task"> Task </label>
+      <input hx-post="/task" hx-target="#task-list" type="text" name="task" id="task" placeholder="Enter Task..."
+        required />
+      <div id="task-list">
+
+      </div>
+    </div>
+  </main>
+  <script>
+    window.onload = async (ev) => {
+      const res = await fetch("/task");
+      const text = await res.text();
+      const list = document.getElementById("task-list")
+      list.innerHTML = text
+    }
+    const input = document.getElementById("task");
+    input.addEventListener("keydown", (ev) => {if (ev.keyCode === 13) ev.target.value = ""})
+  </script>
+</body>
+
+</html>
